@@ -17,20 +17,20 @@ export const dashboardDataCtr = async (req, res, next) => {
     const email = req.email;
 
     try {
-        // let apiProviderDetails = await general.getActiveApiProvider({tbName: "status" , tbValue: 1});
-        // apiProviderDetails = apiProviderDetails[0][0];
+        let apiProviderDetails = await general.getActiveApiProvider({tbName: "status" , tbValue: 1});
+        apiProviderDetails = apiProviderDetails[0][0];
 
-        // const apiProviderBalRes = await axios.post(`${apiProviderDetails.url}?key=${apiProviderDetails.apiKey}&action=balance`);
+        const apiProviderBalRes = await axios.post(`${apiProviderDetails.url}?key=${apiProviderDetails.apiKey}&action=balance`);
 
-        // let data = {
-        //     colombName: ["balance", "currency"],
-        //     NewColombNameValue: [`${apiProviderBalRes.data.balance}`, `${apiProviderBalRes.data.currency}`],
+        let data = {
+            colombName: ["balance", "currency"],
+            NewColombNameValue: [`${apiProviderBalRes.data.balance}`, `${apiProviderBalRes.data.currency}`],
 
-        //     conditionColombName: ["APIproviderID", "id"],
-        //     conditionColombValue: [`${apiProviderDetails.APIproviderID}`, `${apiProviderDetails.id}`]
-        // }
-        // // apiProviderDetails.balance = apiProviderBalRes.data.balance;
-        // await admin.updateApiProvider(data, "OR");
+            conditionColombName: ["APIproviderID", "id"],
+            conditionColombValue: [`${apiProviderDetails.APIproviderID}`, `${apiProviderDetails.id}`]
+        }
+        // apiProviderDetails.balance = apiProviderBalRes.data.balance;
+        await admin.updateApiProvider(data, "OR");
         
 
         let uzer = await admin.getUserByID(userID);
